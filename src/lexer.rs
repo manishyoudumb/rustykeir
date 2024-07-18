@@ -64,6 +64,18 @@ impl<'a> Lexer<'a> {
 
     }
 
+    fn tokenize_number(&mut self) -> Result<Token, KeirError> {
+        let start = self.position;
+        while let Some(ch) = self.peek() {
+            if !ch.is_ascii_digit() && ch != '.' {
+                break;
+            }
+            self.advance();
+        }
+        let number_str = &self.input[start..self.position];
+        number_str.parse::<f64>().map(Token::Number).map_err(|_| KeirError::InvalidNumber)
+    }
+
 
 
 
