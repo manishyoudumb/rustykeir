@@ -1,3 +1,4 @@
+use crate::error::KeirError;
 
 #[derive(Debug, PartialEq, Clone)]
 pub enum Token {
@@ -22,7 +23,7 @@ impl<'a> Lexer<'a> {
         Lexer { input, position: 0 }
     }
 
-    pub fn +
+    pub fn tokenize(&mut self) -> Result<Vec<Token>, KeirError> 
 
 
 
