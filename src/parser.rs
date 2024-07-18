@@ -7,3 +7,7 @@ pub struct Parser {
     position: usize,
 }
 
+
+impl Parser {
+    
+}

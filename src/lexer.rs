@@ -76,6 +76,15 @@ impl<'a> Lexer<'a> {
         number_str.parse::<f64>().map(Token::Number).map_err(|_| KeirError::InvalidNumber)
     }
 
+    fn peek(&self) -> Option<char> {
+        self.input[self.position..].chars().next()
+    }
+    
+    fn advance(&mut self) {
+        if let Some(ch) = self.peek() {
+            self.position += ch.len_utf8();
+        }
+    }
 
 
 
