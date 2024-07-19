@@ -1,7 +1,7 @@
 # 🚀 Keir Lang
 
 - [![Rust](https://img.shields.io/badge/language-Rust-orange.svg)](https://www.rust-lang.org/)
- [![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg)]
+ ![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg)
 - [![Sarcasm Level](https://img.shields.io/badge/sarcasm-%20+9999-blue.svg)](https://en.wikipedia.org/wiki/Sarcasm)
 - [![Emotional Damage](https://img.shields.io/badge/emotional%20damage-100%25-red)](https://www.youtube.com/watch?v=miD_TWmdGIY)
  [![Compiler Mood](https://img.shields.io/badge/compiler%20mood-judgmental-yellow)](https://en.wikipedia.org/wiki/Compiler)
