@@ -94,6 +94,14 @@ println!("|---------------------------------------------------------------------
     Ok(())
 }
 
-
+fn eval(input: &str, interpreter: &Interpreter) -> Result<f64, KeirError> {
+    let mut lexer = Lexer::new(input);
+    let tokens = lexer.tokenize()?;
+    
+    let mut parser = Parser::new(tokens);
+    let ast = parser.parse()?;
+    
+    interpreter.interpret(&ast)
+}
 
 
