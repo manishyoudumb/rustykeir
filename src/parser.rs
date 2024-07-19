@@ -66,4 +66,32 @@ impl Parser {
     
     }
 
+    fn unary(&mut self) -> Result<Expr,KeirError> {
+        if let Some(Token::Minus) = self.peek() {
+            self.advance();
+            let expr = self.unary()?;
+            Ok(Expr::Unary(BinaryOp::Subtract, Box::new(expr)))
+        } 
+        else {
+            self.primary()
+        }
+        
+    }
+
+    fn primary(&mut self) -> Result<Expr, KeirError> {
+        if let Some(token) = self.advance() {
+            match token {
+                Token::Number(n) => Ok(Expr::Number(*n)),
+                Token::LeftParen => {
+                    let expr = self.expression()?;
+                    self.expect(Token::RightParen)?;
+                    Ok(expr)
+                }
+                _ => Err(KeirError::UnexpectedToken),
+            }
+        } else {
+            Err(KeirError::UnexpectedEOF)
+        }
+    }
+
 }
