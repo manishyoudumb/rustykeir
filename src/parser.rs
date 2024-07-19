@@ -15,6 +15,37 @@ impl Parser {
     }
 
     pub fn parse(&mut self) -> Result<Expr, KeirError> {
-        self.parse_expression()
+        self.expression()
+    }
+
+    fn expression(&mut self) -> Result<Expr, KeirError> {
+        self.add_sub()
+    }
+    fn add_sub(&mut self) -> Result<Expr, KeirError> {
+        let mut left = self.mul_div()?;
+
+        while let Some(token) = self.peek() {
+            match token {
+                Token::Plus => {
+                    self.advance();
+                    let right = self.mul_div()?;
+                    left = Expr::Binary(Box::new(left), BinaryOp::Add, Box::new(right));
+                }
+                Token::Minus => {
+                    self.advance();
+                    let right = self.mul_div()?;
+                    left = Expr::Binary(Box::new(left), BinaryOp::Subtract, Box::new(right));
+                }
+                _ => break,
+            }
+        }
+
+        Ok(left)
+    }
+
+    fn mul_div(&mut self) -> Result<Expr,KeirError> {
+        let mut left = self.unary()?;
+
+
     }
 }
