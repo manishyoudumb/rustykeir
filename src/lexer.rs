@@ -90,5 +90,34 @@ impl<'a> Lexer<'a> {
 
 }
 
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_tokenize_mixed_operations_and_whitespace() {
+        let mut lexer = Lexer::new("  3.14  *  (  -42 + 7.5)/ 2.0  ");
+        let tokens = lexer.tokenize().unwrap();
+        assert_eq!(
+            tokens,
+            vec![
+                Token::Number(3.14),
+                Token::Multiply,
+                Token::LeftParen,
+                Token::Minus,
+                Token::Number(42.0),
+                Token::Plus,
+                Token::Number(7.5),
+                Token::RightParen,
+                Token::Divide,
+                Token::Number(2.0),
+                Token::EOF
+            ],
+            "Well, well, well. Looks like someone's trying to make a lexer sweat with all these mixed operations and whitespace. How delightfully devious!"
+        );
+    }
+}
+
+
 
 

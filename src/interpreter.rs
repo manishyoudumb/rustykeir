@@ -40,3 +40,33 @@ impl Interpreter {
     }
 
 }
+
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::ast::{Expr, BinaryOp};
+
+    #[test]
+    fn test_interpret_complex_expression() {
+        let interpreter = Interpreter::new();
+        let expr = Expr::Binary(
+            Box::new(Expr::Binary(
+                Box::new(Expr::Number(5.0)),
+                BinaryOp::Multiply,
+                Box::new(Expr::Unary(
+                    BinaryOp::Subtract,
+                    Box::new(Expr::Number(3.0))
+                ))
+            )),
+            BinaryOp::Add,
+            Box::new(Expr::Binary(
+                Box::new(Expr::Number(10.0)),
+                BinaryOp::Divide,
+                Box::new(Expr::Number(2.0))
+            ))
+        );
+        let result = interpreter.interpret(&expr).unwrap();
+        assert_eq!(result, -10.0, "Ah, the joys of nested expressions. It's like a Russian doll of mathematical torture.");
+    }
+}

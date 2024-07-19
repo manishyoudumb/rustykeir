@@ -115,3 +115,49 @@ impl Parser {
     }
 
 }
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::lexer::Token;
+
+    #[test]
+    fn test_parse_complex_expression_with_precedence() {
+        let tokens = vec![
+            Token::Number(1.0),
+            Token::Plus,
+            Token::Number(2.0),
+            Token::Multiply,
+            Token::LeftParen,
+            Token::Number(3.0),
+            Token::Minus,
+            Token::Number(4.0),
+            Token::RightParen,
+            Token::Divide,
+            Token::Number(5.0),
+            Token::EOF,
+        ];
+        let mut parser = Parser::new(tokens);
+        let result = parser.parse().unwrap();
+
+        // Expected AST: 1 + ((2 * (3 - 4)) / 5)
+        let expected = Expr::Binary(
+            Box::new(Expr::Number(1.0)),
+            BinaryOp::Add,
+            Box::new(Expr::Binary(
+                Box::new(Expr::Binary(
+                    Box::new(Expr::Number(2.0)),
+                    BinaryOp::Multiply,
+                    Box::new(Expr::Binary(
+                        Box::new(Expr::Number(3.0)),
+                        BinaryOp::Subtract,
+                        Box::new(Expr::Number(4.0)),
+                    )),
+                )),
+                BinaryOp::Divide,
+                Box::new(Expr::Number(5.0)),
+            )),
+        );
+
+        assert_eq!(result, expected, "Well, well, well. Looks like our parser can handle complex expressions after all. How delightfully competent!");
+    }
+}
