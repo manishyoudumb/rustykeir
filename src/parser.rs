@@ -46,6 +46,24 @@ impl Parser {
     fn mul_div(&mut self) -> Result<Expr,KeirError> {
         let mut left = self.unary()?;
 
+        while let Some(token) = self.peek() {
+            match token {
+                Token::Multiply => {
+                    self.advance();
+                    let right = self.unary()?;
+                    left = Expr::Binary(Box::new(left), BinaryOp::Multiply, Box::new(right));
+                }
+                Token::Divide => {
+                    self.advance();
+                    let right = self.unary()?;
+                    left = Expr::Binary(Box::new(left), BinaryOp::Divide, Box::new(right));
+                }
+                _ => break,
+            }
+        }
 
+        Ok(left)
+    
     }
+
 }
