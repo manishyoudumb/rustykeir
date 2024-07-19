@@ -94,4 +94,24 @@ impl Parser {
         }
     }
 
+    fn peek(&self) -> Option<&Token> {
+        self.tokens.get(self.position)
+    }
+
+    fn advance(&mut self) -> Option<&Token> {
+        let token = self.tokens.get(self.position);
+        self.position += 1;
+        token
+    }
+
+    fn expect (&mut self, expected: Token) -> Result<(), KeirError> {
+        if self.peek() == Some(&expected) {
+            self.advance();
+            Ok(())
+        } 
+        else {
+            Err(KeirError::UnexpectedToken)
+        }
+    }
+
 }
