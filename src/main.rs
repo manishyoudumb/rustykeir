@@ -6,7 +6,9 @@ mod error;
 mod parser;
 mod interpreter;
 
-
+use crate::lexer::Lexer;
+use crate::parser::Parser;
+use crate::interpreter::Interpreter;
 
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -24,3 +26,16 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
 }
 
+fn run(source: String) -> Result<(), Box<dyn std::error::Error>> {
+    let mut lexer = Lexer::new(&source);
+    let tokens = lexer.tokenize()?;
+    
+    let mut parser = Parser::new(tokens);
+    let ast = parser.parse()?;
+    
+    let interpreter = Interpreter::new();
+    let result = interpreter.interpret(&ast)?;
+    
+    println!("Result: {}", result);
+    Ok(())
+}
