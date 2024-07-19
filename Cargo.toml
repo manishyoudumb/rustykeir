@@ -6,3 +6,4 @@ edition = "2021"
 [dependencies]
 thiserror = "1.0"
 rustyline = "9.1"
+clearscreen = "1.0.10"
