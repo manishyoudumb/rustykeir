@@ -69,4 +69,5 @@ mod tests {
         let result = interpreter.interpret(&expr).unwrap();
         assert_eq!(result, -10.0, "Ah, the joys of nested expressions. It's like a Russian doll of mathematical torture.");
     }
+
 }
